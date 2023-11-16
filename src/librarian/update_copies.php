@@ -59,7 +59,7 @@
 				</div>
 					
 				<div class="icon">
-					<input class="b-copies" type="number" name="b_copies" placeholder="Copies to add" required />
+					<input class="b-copies" type="number" name="b_copies" placeholder="Copies to add" required min="0" max="1000000000"/>
 				</div>
 						
 				<input type="submit" name="b_add" value="Add Copies" />
