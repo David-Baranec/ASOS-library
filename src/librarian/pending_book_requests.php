@@ -112,6 +112,8 @@
 					echo success("Successfully granted ".$requests." requests");
 				else
 					echo error_without_field("No request selected");
+
+				header("refresh:1; url=pending_book_requests.php");
 			}			
 
 			if(isset($_POST['l_reject'])) {
@@ -160,4 +162,6 @@
 					echo success("Successfully deleted ".$requests." requests");
 				else
 					echo error_without_field("No request selected");
+
+				header("refresh:1; url=pending_book_requests.php");
 			}			

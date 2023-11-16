@@ -128,6 +128,8 @@
 				}
 				else
 					echo error_without_field("Please select a book to return");
+
+				header("refresh:1; url=my_books.php");
 			}
 		?>
 		
