@@ -3,7 +3,6 @@
 	require "../message_display.php";
 	require "verify_librarian.php";
 	require "header_librarian.php";
-	require_once "../../vendor/autoload.php";
 ?>
 
 <html>
