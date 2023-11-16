@@ -90,6 +90,8 @@
 					echo success("Successfully added ".$members." members");
 				else
 					echo error_without_field("No registration selected");
+
+				header("refresh:1; url=pending_registrations.php");
 			}
 			
 			if(isset($_POST['l_delete']))
@@ -121,6 +123,8 @@
 					echo success("Successfully deleted ".$requests." requests");
 				else
 					echo error_without_field("No registration selected");
+
+				header("refresh:1; url=pending_registrations.php");
 			}
 		?>
 	</body>
