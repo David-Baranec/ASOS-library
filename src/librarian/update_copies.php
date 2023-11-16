@@ -59,7 +59,8 @@
 					<p id="error"></p>
 				</div>
 				
-				<div class="icon">
+				<div>
+					<p class = "cd-select icon">
 				<select class="b-isbn" name="b_isbn" required>
 					<?php
 						while ($row = $isbnResult->fetch_assoc()) {
@@ -67,6 +68,7 @@
 						}
 					?>
 				</select>
+					</p>
 			</div>
 					
 				<div class="icon">
