@@ -13,6 +13,9 @@
 		<link rel="stylesheet" type="text/css" href="css/pending_book_requests_style.css">
 	</head>
 	<body>
+		<a id="back-btn" href="./home.php">
+			<input type="button" value="Back" />
+		</a>
 		<?php
 			$query = $con->prepare("SELECT * FROM pending_book_requests;");
 			$query->execute();

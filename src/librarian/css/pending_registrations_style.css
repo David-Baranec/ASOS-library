@@ -35,7 +35,7 @@
 .cd-form input[type="submit"] {
   border: none;
   background: #d75069;
-  border-radius: .25em;
+  border-radius: 0.25em;
   padding: 16px 20px;
   color: #ffffff;
   font-weight: bold;
@@ -68,7 +68,7 @@
 }
 
 .cd-form .error-message {
-	display: none;
+  display: none;
 }
 
 .cd-form .error-message p {
@@ -78,7 +78,7 @@
   text-align: center;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  border-radius: .25em;
+  border-radius: 0.25em;
   padding: 16px;
 }
 
@@ -89,10 +89,33 @@
   text-align: center;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  border-radius: .25em;
+  border-radius: 0.25em;
   padding: 16px;
 }
 
 .cd-form .error-field {
   border-color: #e94b35 !important;
+}
+
+#back-btn input[type="button"] {
+  width: 10%;
+  border: none;
+  background: #d75069;
+  border-radius: 0.25em;
+  padding: 16px 20px;
+  color: #ffffff;
+  font-weight: bold;
+  font-family: "Open Sans", sans-serif;
+  font-size: 1.6rem;
+  float: right;
+  cursor: pointer;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  float: left;
+  margin: 10px 0px 0px 10px;
 }

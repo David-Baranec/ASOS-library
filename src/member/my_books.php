@@ -13,7 +13,9 @@
 		<link rel="stylesheet" type="text/css" href="css/my_books_style.css">
 	</head>
 	<body>
-	
+		<div><a id="back-btn" href="./home.php">
+			<input type="button" value="Back" />
+		</a></div>
 		<?php
 			$query = $con->prepare("SELECT book_isbn FROM book_issue_log WHERE member = ?;");
 			$query->bind_param("s", $_SESSION['username']);
@@ -21,7 +23,7 @@
 			$result = $query->get_result();
 			$rows = mysqli_num_rows($result);
 			if($rows == 0)
-				echo "<h2 align='center'>No books currently issued</h2>";
+				echo "<div id='centered_container'><h2 align='center'>No books currently issued</h2></div>";
 			else
 			{
 				echo "<form class='cd-form' method='POST' action='#'>";
