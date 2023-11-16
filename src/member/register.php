@@ -40,7 +40,7 @@
 				</div>
 				
 				<br />
-				<input type="submit" name="m_register" value="Register" />
+				<input type="submit" <?php if(isset($_POST['m_register'])) echo 'disabled="disabled"'?> name="m_register" value="Register" />
 		</form>
 	</body>
 	
@@ -67,8 +67,11 @@
 					{
 						$query = $con->prepare("INSERT INTO pending_registrations(username, password, name, email, balance) VALUES(?, ?, ?, ?, ?);");
 						$query->bind_param("ssssd", $_POST['m_user'], sha1($_POST['m_pass']), $_POST['m_name'], $_POST['m_email'], $_POST['m_balance']);
-						if($query->execute())
+						if($query->execute()){
 							echo success("Details recorded. You will be notified on the email ID provided when your details have been verified");
+							header("refresh:3; url=index.php");
+							
+						}
 						else
 							echo error_without_field("Couldn\'t record details. Please try again later");
 					}
