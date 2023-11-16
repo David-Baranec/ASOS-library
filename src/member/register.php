@@ -36,7 +36,7 @@
 				</div>
 				
 				<div class="icon">
-					<input class="m-balance" type="number" name="m_balance" id="m_balance" placeholder="Initial Balance" required />
+					<input class="m-balance" type="number" name="m_balance" id="m_balance" min="1"  max="10000" placeholder="Initial Balance" required />
 				</div>
 				
 				<br />
