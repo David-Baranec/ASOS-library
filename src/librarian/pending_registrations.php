@@ -13,6 +13,9 @@
 		<link rel="stylesheet" type="text/css" href="css/pending_registrations_style.css">
 	</head>
 	<body>
+		<a id="back-btn" href="./home.php">
+			<input type="button" value="Back" />
+		</a>
 		<?php
 			$query = $con->prepare("SELECT username, name, email, balance FROM pending_registrations");
 			$query->execute();

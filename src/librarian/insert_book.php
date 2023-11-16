@@ -13,6 +13,9 @@
 		<link rel="stylesheet" href="css/insert_book_style.css">
 	</head>
 	<body>
+		<a id="back-btn" href="./home.php">
+			<input type="button" value="Back" />
+		</a>
 		<form class="cd-form" method="POST" action="#">
 			<legend>Enter book details</legend>
 			
