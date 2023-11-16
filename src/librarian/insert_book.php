@@ -43,6 +43,9 @@
         </div>
     </header>
 	<body>
+		<a id="back-btn" href="./home.php">
+			<input type="button" value="Back" />
+		</a>
 		<form class="cd-form" method="POST" action="#">
 			<legend>Enter book details</legend>
 			

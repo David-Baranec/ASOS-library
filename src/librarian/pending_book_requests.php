@@ -56,6 +56,9 @@
 	</head>
 	
 	<body>
+		<a id="back-btn" href="./home.php">
+			<input type="button" value="Back" />
+		</a>
 		<?php
 			$query = $con->prepare("SELECT * FROM pending_book_requests;");
 			$query->execute();
@@ -101,91 +104,110 @@
 			
 			//$header = 'From: <noreply@library.com>' . "\r\n";
 			
-			if(isset($_POST['l_grant']))
-			{
+			if(isset($_POST['l_grant'])) {
 				$requests = 0;
-				for($i=0; $i<$rows; $i++)
-				{
-					if(isset($_POST['cb_'.$i]))
-					{
+				for($i=0; $i<$rows; $i++) {
+					if(isset($_POST['cb_'.$i])) {
 						$request_id =  $_POST['cb_'.$i];
+			
+						// Query to fetch member and ISBN
 						$query = $con->prepare("SELECT member, book_isbn FROM pending_book_requests WHERE request_id = ?;");
 						$query->bind_param("d", $request_id);
 						$query->execute();
 						$resultRow = mysqli_fetch_array($query->get_result());
 						$member = $resultRow[0];
 						$isbn = $resultRow[1];
+						$query->close(); // Close the result set
+			
+						// Query to insert into book_issue_log
 						$query = $con->prepare("INSERT INTO book_issue_log(member, book_isbn) VALUES(?, ?);");
 						$query->bind_param("ss", $member, $isbn);
 						if(!$query->execute())
 							die(error_without_field("ERROR: Couldn\'t issue book"));
+						$query->close(); // Close the result set
 						$requests++;
-						
+			
+						// Query to fetch email
 						$query = $con->prepare("SELECT email FROM member WHERE username = ?;");
 						$query->bind_param("s", $member);
 						$query->execute();
 						//$to = mysqli_fetch_array($query->get_result())[0];
 						//$subject = "Book successfully issued";
-						
+						$query->close(); // Close the result set
+			
+						// Query to fetch book title
 						$query = $con->prepare("SELECT title FROM book WHERE isbn = ?;");
 						$query->bind_param("s", $isbn);
 						$query->execute();
 						$title = mysqli_fetch_array($query->get_result())[0];
-						
+						$query->close(); // Close the result set
+			
+						// Query to fetch due date
 						$query = $con->prepare("SELECT due_date FROM book_issue_log WHERE member = ? AND book_isbn = ?;");
 						$query->bind_param("ss", $member, $isbn);
 						$query->execute();
 						$due_date = mysqli_fetch_array($query->get_result())[0];
+						$query->close(); // Close the result set
+			
 						//$message = "The book '".$title."' with ISBN ".$isbn." has been issued to your account. The due date to return the book is ".$due_date.".";
-						
 						//mail($to, $subject, $message, $header);
 					}
 				}
+			
 				if($requests > 0)
 					echo success("Successfully granted ".$requests." requests");
 				else
 					echo error_without_field("No request selected");
-			}
-			
-			if(isset($_POST['l_reject']))
-			{
+
+				header("refresh:1; url=pending_book_requests.php");
+			}			
+
+			if(isset($_POST['l_reject'])) {
 				$requests = 0;
-				for($i=0; $i<$rows; $i++)
-				{
-					if(isset($_POST['cb_'.$i]))
-					{
+				for($i=0; $i<$rows; $i++) {
+					if(isset($_POST['cb_'.$i])) {
 						$requests++;
 						$request_id =  $_POST['cb_'.$i];
-						
+			
+						// Query to fetch member and ISBN
 						$query = $con->prepare("SELECT member, book_isbn FROM pending_book_requests WHERE request_id = ?;");
 						$query->bind_param("d", $request_id);
 						$query->execute();
 						$resultRow = mysqli_fetch_array($query->get_result());
 						$member = $resultRow[0];
 						$isbn = $resultRow[1];
-						
+						$query->close(); // Close the result set
+			
+						// Query to fetch email
 						$query = $con->prepare("SELECT email FROM member WHERE username = ?;");
 						$query->bind_param("s", $member);
 						$query->execute();
-						//$to = mysqli_fetch_array($query->get_result())[0];
-						//$subject = "Book issue rejected";
-						
+						$to = mysqli_fetch_array($query->get_result())[0];
+						$query->close(); // Close the result set
+			
+						// Query to fetch book title
 						$query = $con->prepare("SELECT title FROM book WHERE isbn = ?;");
 						$query->bind_param("s", $isbn);
 						$query->execute();
 						$title = mysqli_fetch_array($query->get_result())[0];
-						//$message = "Your request for issuing the book '".$title."' with ISBN ".$isbn." has been rejected. You can request the book again or visit a librarian for further information.";
-						
+						$query->close(); // Close the result set
+			
+						// Query to delete the pending book request
 						$query = $con->prepare("DELETE FROM pending_book_requests WHERE request_id = ?");
 						$query->bind_param("d", $request_id);
 						if(!$query->execute())
-							die(error_without_field("ERROR: Couldn\'t delete values"));
-						
-						//mail($to, $subject, $message, $header);
+							die(error_without_field("ERROR: Couldn't delete values"));
+						$query->close(); // Close the result set
+			
+						// Now you can send the email if needed
+						// mail($to, $subject, $message, $header);
 					}
 				}
+			
 				if($requests > 0)
 					echo success("Successfully deleted ".$requests." requests");
 				else
 					echo error_without_field("No request selected");
-			}
+
+				header("refresh:1; url=pending_book_requests.php");
+			}			
