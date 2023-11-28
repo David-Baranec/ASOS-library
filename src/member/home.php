@@ -15,7 +15,7 @@
 	<body>
 		<?php
 
-			$query = $con->prepare("SELECT * FROM book  where copies>0 ORDER BY title");
+			
 
 			$query2 = $con->prepare("SELECT book_isbn FROM `book_issue_log` where member like ?");
 			$query2->bind_param("s", $_SESSION['username']);
@@ -30,7 +30,7 @@
 				$result3 = $query3->get_result();
 				if(mysqli_num_rows($result3)>0)
 					{
-						$query4 = $con->prepare("SELECT * FROM `book` where category like ?");
+						$query4 = $con->prepare("SELECT * FROM `book` where category like ? and copies>0");
 						$book_category= mysqli_fetch_row($result3);
 						$query4->bind_param("s", $book_category[0]);
 						$query4->execute();
@@ -75,7 +75,7 @@
 			}
 			else{
 
-
+			$query = $con->prepare("SELECT * FROM book  where copies>0 ORDER BY title");
 			$query->execute();
 			$result = $query->get_result();
 			if(!$result)
