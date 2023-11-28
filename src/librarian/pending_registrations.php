@@ -2,7 +2,7 @@
 	require "../db_connect.php";
 	require "../message_display.php";
 	require "verify_librarian.php";
-	require "header_librarian.php";
+	// require "header_librarian.php";
 ?>
 
 <html>
@@ -11,8 +11,51 @@
 		<link rel="stylesheet" type="text/css" href="../css/global_styles.css">
 		<link rel="stylesheet" type="text/css" href="../css/custom_checkbox_style.css">
 		<link rel="stylesheet" type="text/css" href="css/pending_registrations_style.css">
+		<link rel="stylesheet" type="text/css" href="css/header_librarian_style.css" />
+		<script>
+        function redirectToPage(page) {
+            window.location.href = page;
+        }
+    </script>
+</head>
+
+<body>
+    <header>
+        <div class="cd-logo">
+            <a href="../librarian/home.php">
+                <img src="img/ic_logo.svg" alt="Logo" />
+                <p>LIBRARY</p>
+            </a>
+        </div>
+        
+        <div class="dropdown">
+            <button class="dropbtn">
+                <p id="librarian-name"><?php echo $_SESSION['username'] ?></p>
+                <div id="allTheThings" class="dropdown-content">
+					<a href="#" onclick="redirectToPage('home.php')">Home</a>
+                    <a href="#" onclick="redirectToPage('pending_book_requests.php')">Pending book requests</a>
+                    <a href="#" onclick="redirectToPage('pending_book_requests.php')">Pending book requests</a>
+                    <a href="#" onclick="redirectToPage('insert_book.php')">Add a new book</a>
+                    <a href="#" onclick="redirectToPage('update_copies.php')">Update copies of a book</a>
+                    <a href="#" onclick="redirectToPage('update_balance.php')">Update balance of a member</a>
+                    <a href="#" onclick="redirectToPage('due_handler.php')">Reminders for today</a>
+					<a href="../logout.php">Logout</a>
+                </div>
+            </button>
+        </div>
+    </header>
+
+
+	<head>
+		<title>Pending Book Requests</title>
+		<link rel="stylesheet" type="text/css" href="../css/global_styles.css">
+		<link rel="stylesheet" type="text/css" href="../css/custom_checkbox_style.css">
+		<link rel="stylesheet" type="text/css" href="css/pending_registrations_style.css">
 	</head>
 	<body>
+		<a id="back-btn" href="./home.php">
+			<input type="button" value="Back" />
+		</a>
 		<?php
 			$query = $con->prepare("SELECT username, name, email, balance FROM pending_registrations");
 			$query->execute();
@@ -88,6 +131,8 @@
 				}
 				else
 					echo error_without_field("No registration selected");
+
+				header("refresh:1; url=pending_registrations.php");
 			}
 			
 			if(isset($_POST['l_delete']))
@@ -116,6 +161,8 @@
 				}
 				else
 					echo error_without_field("No registration selected");
+
+				header("refresh:1; url=pending_registrations.php");
 			}
 			error_reporting(E_ALL);
 			ini_set("display_errors", 1);

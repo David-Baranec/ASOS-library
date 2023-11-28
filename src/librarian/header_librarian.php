@@ -5,8 +5,8 @@
 	</head>
 	<body>
 		<header>
-			<div id="cd-logo">
-				<a href="../">
+			<div class ="cd-logo">
+				<a href="../librarian/home.php">
 					<img src="img/ic_logo.svg" alt="Logo" />
 					<p>LIBRARY</p>
 				</a>
