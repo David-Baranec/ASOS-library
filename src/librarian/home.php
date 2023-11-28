@@ -26,8 +26,8 @@
 			<a href="update_balance.php">
 				<input type="button" value="Update balance of a member" />
 			</a><br />
-			<a href="due_handler.php">
-				<input type="button" value="Reminders for today" />
+			<a href="history.php">
+				<input type="button" value="Library history" />
 			</a><br /><br />
 		</div>
 	</body>

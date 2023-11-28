@@ -14,6 +14,9 @@
 	</head>
 	<body>
 		<?php
+
+			$query = $con->prepare("SELECT * FROM book  where copies>0 ORDER BY title");
+
 			$query2 = $con->prepare("SELECT book_isbn FROM `book_issue_log` where member like ?");
 			$query2->bind_param("s", $_SESSION['username']);
 			$query2->execute();
@@ -73,7 +76,6 @@
 			else{
 
 
-			$query = $con->prepare("SELECT * FROM book ORDER BY title");
 			$query->execute();
 			$result = $query->get_result();
 			if(!$result)
@@ -175,7 +177,7 @@
 										if(!$query->execute())
 											echo error_without_field("ERROR: Couldn\'t request book");
 										else
-											echo success("Book successfully requested. You will be notified by email when the book is issued to your account");
+											echo success("Book successfully requested.");
 									}
 								}
 							}

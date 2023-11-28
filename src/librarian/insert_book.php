@@ -54,7 +54,7 @@
 				</div>
 				
 				<div class="icon">
-					<input class="b-isbn" id="b_isbn" type="number" name="b_isbn" placeholder="ISBN" required />
+					<input class="b-isbn" id="b_isbn" type="number"  min= 1 max=9999999999999 name="b_isbn" placeholder="ISBN" required />
 				</div>
 				
 				<div class="icon">
@@ -78,11 +78,11 @@
 				</div>
 				
 				<div class="icon">
-					<input class="b-price" type="number" name="b_price" placeholder="Price" required />
+					<input class="b-price" type="number" min=1 max=100 name="b_price" placeholder="Price" required />
 				</div>
 				
 				<div class="icon">
-					<input class="b-copies" type="number" name="b_copies" placeholder="Copies" required />
+					<input class="b-copies" type="number" min=1 max=100 name="b_copies" placeholder="Copies" required />
 				</div>
 				
 				<br />
