@@ -56,8 +56,6 @@
 				echo "</form>";
 			}
 			
-			//$header = 'From: <noreply@library.com>' . "\r\n";
-			
 			if(isset($_POST['l_grant']))
 			{
 				$requests = 0;
@@ -76,13 +74,15 @@
 						$query->bind_param("ss", $member, $isbn);
 						if(!$query->execute())
 							die(error_without_field("ERROR: Couldn\'t issue book"));
+						//
+						$borrowing_date= date("Y-m-d H:i:s");
+						$query = $con->prepare("INSERT INTO book_history_log(member, book_isbn, borrowing_date) VALUES(?, ?,?);");
+						$query->bind_param("sss", $member, $isbn, $borrowing_date);
+						if(!$query->execute())
+							die(error_without_field("ERROR: Couldn\'t issue book"));
+					
+						//
 						$requests++;
-						
-						$query = $con->prepare("SELECT email FROM member WHERE username = ?;");
-						$query->bind_param("s", $member);
-						$query->execute();
-						//$to = mysqli_fetch_array($query->get_result())[0];
-						//$subject = "Book successfully issued";
 						
 						$query = $con->prepare("SELECT title FROM book WHERE isbn = ?;");
 						$query->bind_param("s", $isbn);
@@ -93,13 +93,12 @@
 						$query->bind_param("ss", $member, $isbn);
 						$query->execute();
 						$due_date = mysqli_fetch_array($query->get_result())[0];
-						//$message = "The book '".$title."' with ISBN ".$isbn." has been issued to your account. The due date to return the book is ".$due_date.".";
-						
-						//mail($to, $subject, $message, $header);
 					}
 				}
-				if($requests > 0)
+				if($requests > 0){
 					echo success("Successfully granted ".$requests." requests");
+					header("refresh:1; url=pending_book_requests.php");
+				}
 				else
 					echo error_without_field("No request selected");
 			}
@@ -121,28 +120,21 @@
 						$member = $resultRow[0];
 						$isbn = $resultRow[1];
 						
-						$query = $con->prepare("SELECT email FROM member WHERE username = ?;");
-						$query->bind_param("s", $member);
-						$query->execute();
-						//$to = mysqli_fetch_array($query->get_result())[0];
-						//$subject = "Book issue rejected";
-						
 						$query = $con->prepare("SELECT title FROM book WHERE isbn = ?;");
 						$query->bind_param("s", $isbn);
 						$query->execute();
 						$title = mysqli_fetch_array($query->get_result())[0];
-						//$message = "Your request for issuing the book '".$title."' with ISBN ".$isbn." has been rejected. You can request the book again or visit a librarian for further information.";
 						
 						$query = $con->prepare("DELETE FROM pending_book_requests WHERE request_id = ?");
 						$query->bind_param("d", $request_id);
 						if(!$query->execute())
 							die(error_without_field("ERROR: Couldn\'t delete values"));
-						
-						//mail($to, $subject, $message, $header);
 					}
 				}
-				if($requests > 0)
+				if($requests > 0){
 					echo success("Successfully deleted ".$requests." requests");
+					header("refresh:1; url=pending_book_requests.php");
+				}
 				else
 					echo error_without_field("No request selected");
 			}

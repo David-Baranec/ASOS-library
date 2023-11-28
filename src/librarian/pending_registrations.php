@@ -80,14 +80,12 @@
 							die(error_without_field("ERROR: Couldn\'t insert values"));
 						$members++;
 						
-						//$to = $row[3];
-						//$subject = "Library membership accepted";
-						//$message = "Your membership has been accepted by the library. You can now issue books using your account.";
-						//mail($to, $subject, $message, $header);
 					}
 				}
-				if($members > 0)
+				if($members > 0){
 					echo success("Successfully added ".$members." members");
+					header("refresh:1; url=pending_registrations.php");
+				}
 				else
 					echo error_without_field("No registration selected");
 			}
@@ -110,18 +108,17 @@
 						if(!$query->execute())
 							die(error_without_field("ERROR: Couldn\'t delete values"));
 						$requests++;
-						
-						//$to = $email;
-						//$subject = "Library membership rejected";
-						//$message = "Your membership has been rejected by the library. Please contact a librarian for further information.";
-						//mail($to, $subject, $message, $header);
 					}
 				}
-				if($requests > 0)
+				if($requests > 0){
 					echo success("Successfully deleted ".$requests." requests");
+					header("refresh:1; url=pending_registrations.php");
+				}
 				else
 					echo error_without_field("No registration selected");
 			}
+			error_reporting(E_ALL);
+			ini_set("display_errors", 1);
 		?>
 	</body>
 </html>

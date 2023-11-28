@@ -25,10 +25,10 @@
 				</div>
 					
 				<div class="icon">
-					<input class="b-copies" type="number" name="b_copies" placeholder="Copies to add" required />
+					<input class="b-copies" type="number" max=30 min=0 name="b_copies" placeholder="Available copies" required />
 				</div>
 						
-				<input type="submit" name="b_add" value="Add Copies" />
+				<input type="submit" name="b_add" value="Update Copies" />
 		</form>
 		<?php
 			$query = $con->prepare("SELECT * FROM book ORDER BY title");
@@ -88,7 +88,7 @@
 				echo error_with_field("Invalid ISBN", "b_isbn");
 			else
 			{
-				$query = $con->prepare("UPDATE book SET copies = copies + ? WHERE isbn = ?;");
+				$query = $con->prepare("UPDATE book SET copies = ? WHERE isbn = ?;");
 				$query->bind_param("ds", $_POST['b_copies'], $_POST['b_isbn']);
 				if(!$query->execute())
 					die(error_without_field("ERROR: Couldn\'t add copies"));

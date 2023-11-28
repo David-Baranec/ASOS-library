@@ -14,7 +14,7 @@
 	</head>
 	<body>
 		<?php
-			$query = $con->prepare("SELECT * FROM book ORDER BY title");
+			$query = $con->prepare("SELECT * FROM book  where copies>0 ORDER BY title");
 			$query->execute();
 			$result = $query->get_result();
 			if(!$result)
@@ -115,7 +115,7 @@
 										if(!$query->execute())
 											echo error_without_field("ERROR: Couldn\'t request book");
 										else
-											echo success("Book successfully requested. You will be notified by email when the book is issued to your account");
+											echo success("Book successfully requested.");
 									}
 								}
 							}
