@@ -26,6 +26,7 @@
 							echo "Balance: $".$balance;
 						?>
 					</a>
+					<a href="pending_book_requests.php">Pending requests</a>
 					<a href="my_books.php">My books</a>
 					<a href="../logout.php">Logout</a>
 				</div>
