@@ -73,6 +73,23 @@
 						for($i=0; $i<$rows; $i++)
 						{
 							$row = mysqli_fetch_array($result4);
+							
+							// Check if the book has not been requested by the user
+							$bookId = $row[0];
+							$userId = $_SESSION['username']; // Assuming you have a user session
+							$requestCheckQuery = $con->prepare("SELECT * FROM pending_book_requests WHERE member = ? AND book_isbn = ?;");
+							$requestCheckQuery->bind_param("ii", $userId, $bookId);
+							$requestCheckQuery->execute();
+							$requestCheckResult = $requestCheckQuery->get_result();
+							$bookNotRequested = mysqli_num_rows($requestCheckResult) == 0;
+
+							$requestCheckQuery = $con->prepare("SELECT * FROM book_issue_log WHERE member = ? AND book_isbn = ?;");
+							$requestCheckQuery->bind_param("ii", $userId, $bookId);
+							$requestCheckQuery->execute();
+							$requestCheckResult = $requestCheckQuery->get_result();
+							$bookNotIssued = mysqli_num_rows($requestCheckResult) == 0;
+
+							if ($bookNotRequested && $bookNotIssued){
 							echo "<tr>
 									<td>
 										<label class='control control--checkbox'>
@@ -86,6 +103,7 @@
 								else
 									echo "<td>".$row[$j]."</td>";
 							echo "</tr>";
+							}
 						}
 						echo "</table>";
 						echo "<br /><br /><input type='submit' name='m_request' value='Request book' />";
@@ -140,6 +158,22 @@
             for($i=0; $i<$rows; $i++)
             {
                 $row = mysqli_fetch_array($result);
+
+				$bookId = $row[0];
+				$userId = $_SESSION['username']; // Assuming you have a user session
+				$requestCheckQuery = $con->prepare("SELECT * FROM pending_book_requests WHERE member = ? AND book_isbn = ?;");
+				$requestCheckQuery->bind_param("ii", $userId, $bookId);
+				$requestCheckQuery->execute();
+				$requestCheckResult = $requestCheckQuery->get_result();
+				$bookNotRequested = mysqli_num_rows($requestCheckResult) == 0;
+
+				$requestCheckQuery = $con->prepare("SELECT * FROM book_issue_log WHERE member = ? AND book_isbn = ?;");
+				$requestCheckQuery->bind_param("ii", $userId, $bookId);
+				$requestCheckQuery->execute();
+				$requestCheckResult = $requestCheckQuery->get_result();
+				$bookNotIssued = mysqli_num_rows($requestCheckResult) == 0;
+
+				if ($bookNotRequested && $bookNotIssued){
                 echo "<tr>
                         <td>
                             <label class='control control--checkbox'>
@@ -153,6 +187,7 @@
                     else
                         echo "<td>".$row[$j]."</td>";
                 echo "</tr>";
+				}
             }
             echo "</table>";
             echo "<br /><br /><input type='submit' name='m_request' value='Request selected books' />";
