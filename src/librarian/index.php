@@ -37,8 +37,10 @@
 	<?php
 		if(isset($_POST['l_login']))
 		{
+			$hashed_password = sha1($_POST['l_pass']);
+
 			$query = $con->prepare("SELECT id FROM librarian WHERE username = ? AND password = ?;");
-			$query->bind_param("ss", $_POST['l_user'], sha1($_POST['l_pass']));
+			$query->bind_param("ss", $_POST['l_user'], $hashed_password);
 			$query->execute();
 			$result = $query->get_result();
 			if(mysqli_num_rows($result) != 1)
