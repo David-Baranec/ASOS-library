@@ -21,6 +21,13 @@
 		$result2 = $query2->get_result();
 		if(mysqli_num_rows($result2)>0){
 			echo "<h2 align='center'> We have something to recommend</h2>";
+
+			echo "<br /><br /><form class='cd-form' method='POST' action='#'>";
+			echo "<label for='search'>Search:</label>";
+			echo "<input type='text' name='search' id='search' placeholder='Enter title or author'>";
+			echo "<input type='submit' value='Search'>";
+			echo "</form>";
+
 			$query3 = $con->prepare("SELECT category FROM `book` where isbn=?");
 			$book= mysqli_fetch_row($result2);
 			$query3->bind_param("s", $book[0]);
@@ -34,6 +41,20 @@
 					$query4->execute();
 					$result4 = $query4->get_result();
 					$rows= mysqli_num_rows($result4);
+
+					if (isset($_POST['search'])) {
+						$searchTerm = '%' . $_POST['search'] . '%';
+						$query4 = $con->prepare("SELECT * FROM `book` WHERE category LIKE ? AND copies > 0 AND (title LIKE ? OR author LIKE ?)");
+						$query4->bind_param("sss", $book_category[0], $searchTerm, $searchTerm);
+					} else {
+						$query4 = $con->prepare("SELECT * FROM `book` WHERE category LIKE ? AND copies > 0");
+						$query4->bind_param("s", $book_category[0]);
+					}
+					
+					$query4->execute();
+					$result4 = $query4->get_result();
+					$rows = mysqli_num_rows($result4);
+					
 					if($rows){
 						echo "<form class='cd-form' method='POST' action='#'>";
 						echo "<div class='error-message' id='error-message'>
@@ -54,9 +75,10 @@
 							$row = mysqli_fetch_array($result4);
 							echo "<tr>
 									<td>
-										<label class='control control--radio'>
-											<input type='radio' name='rd_book' value=".$row[0]." />
-										<div class='control__indicator'></div>
+										<label class='control control--checkbox'>
+											<input type='checkbox' name='cb_book[]' value=".$row[0]." />
+											<div class='control__indicator'></div>
+										</label>
 									</td>";
 							for($j=0; $j<6; $j++)
 								if($j == 4)
@@ -86,6 +108,19 @@
             echo "<h2 align='center'>No books available</h2>";
         else
         {
+
+			if (isset($_POST['search'])) {
+				$searchTerm = '%' . $_POST['search'] . '%';
+				$query = $con->prepare("SELECT * FROM book WHERE copies > 0 AND (title LIKE ? OR author LIKE ?) ORDER BY title");
+				$query->bind_param("ss", $searchTerm, $searchTerm);
+			} else {
+				$query = $con->prepare("SELECT * FROM book WHERE copies > 0 ORDER BY title");
+			}
+			
+			$query->execute();
+			$result = $query->get_result();
+			$rows = mysqli_num_rows($result);
+
             echo "<form class='cd-form' method='POST' action='#'>";
             echo "<legend>Available books</legend>";
             echo "<div class='error-message' id='error-message'>
@@ -180,8 +215,10 @@
 									
 									if(!$query->execute())
 										echo error_without_field("ERROR: Couldn't request book");
-									else
-										echo success("Book ($selectedBook) successfully requested. You will be notified by email when the book is issued to your account");
+									else {
+										$bookNames = implode(', ', $selectedBooks);
+										echo success("Book ($bookNames) successfully requested. Wait for Admin to approve!");
+									}
 								}
 							}
 						}

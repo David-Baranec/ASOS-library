@@ -32,7 +32,7 @@
 .cd-form input[type="submit"] {
   border: none;
   background: #d75069;
-  border-radius: .25em;
+  border-radius: 0.25em;
   padding: 16px 20px;
   color: #ffffff;
   font-family: "Open Sans", sans-serif;
@@ -65,8 +65,8 @@
   transform: scale(0.9);
 }
 
-.cd-form .error-message{
-	display: none;
+.cd-form .error-message {
+  display: none;
 }
 
 .cd-form .error-message p {
@@ -76,7 +76,7 @@
   text-align: center;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  border-radius: .25em;
+  border-radius: 0.25em;
   padding: 16px;
 }
 
@@ -87,6 +87,32 @@
   text-align: center;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  border-radius: .25em;
+  border-radius: 0.25em;
   padding: 16px;
+}
+
+#searchForm {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+label {
+  margin-right: 10px;
+  font-size: 16px;
+  color: #333;
+}
+
+input[type="text"] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: border-color 0.3s ease-in-out;
+}
+
+input[type="text"]:focus {
+  outline: none;
+  border-color: #007bff;
 }
