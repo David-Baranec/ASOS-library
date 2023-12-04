@@ -94,7 +94,11 @@
 						$query->bind_param("ss", $_SESSION['username'], $_POST['cb_book'.$i]);
 						if(!$query->execute())
 							die(error_without_field("ERROR: Couldn\'t return the books"));
-						
+						$query = $con->prepare("UPDATE book_history_log SET return_date = ? WHERE member = ? AND book_isbn = ?;");
+						$return_date= date("Y-m-d H:i:s");
+						$query->bind_param("sss",$return_date, $_SESSION['username'], $_POST['cb_book'.$i]);
+						if(!$query->execute())
+							die(error_without_field("ERROR: Couldn\'t save the return of books"));
 						if($days > 0)
 						{
 							$penalty = 5*$days;
@@ -131,7 +135,8 @@
 				else
 					echo error_without_field("Please select a book to return");
 
-				header("refresh:1; url=my_books.php");
+					header("refresh:3; url=home.php");
+
 			}
 		?>
 		

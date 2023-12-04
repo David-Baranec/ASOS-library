@@ -14,7 +14,66 @@
 </head>
 <body>
     <?php
-        $query = $con->prepare("SELECT * FROM book ORDER BY title");
+
+		$query2 = $con->prepare("SELECT book_isbn FROM `book_issue_log` where member like ?");
+		$query2->bind_param("s", $_SESSION['username']);
+		$query2->execute();
+		$result2 = $query2->get_result();
+		if(mysqli_num_rows($result2)>0){
+			echo "<h2 align='center'> We have something to recommend</h2>";
+			$query3 = $con->prepare("SELECT category FROM `book` where isbn=?");
+			$book= mysqli_fetch_row($result2);
+			$query3->bind_param("s", $book[0]);
+			$query3->execute();
+			$result3 = $query3->get_result();
+			if(mysqli_num_rows($result3)>0)
+				{
+					$query4 = $con->prepare("SELECT * FROM `book` where category like ? and copies>0");
+					$book_category= mysqli_fetch_row($result3);
+					$query4->bind_param("s", $book_category[0]);
+					$query4->execute();
+					$result4 = $query4->get_result();
+					$rows= mysqli_num_rows($result4);
+					if($rows){
+						echo "<form class='cd-form' method='POST' action='#'>";
+						echo "<div class='error-message' id='error-message'>
+								<p id='error'></p>
+							</div>";
+						echo "<table width='100%' cellpadding=10 cellspacing=10>";
+						echo "<tr>
+								<th></th>
+								<th>ISBN<hr></th>
+								<th>Title<hr></th>
+								<th>Author<hr></th>
+								<th>Category<hr></th>
+								<th>Price<hr></th>
+								<th>Copies available<hr></th>
+							</tr>";
+						for($i=0; $i<$rows; $i++)
+						{
+							$row = mysqli_fetch_array($result4);
+							echo "<tr>
+									<td>
+										<label class='control control--radio'>
+											<input type='radio' name='rd_book' value=".$row[0]." />
+										<div class='control__indicator'></div>
+									</td>";
+							for($j=0; $j<6; $j++)
+								if($j == 4)
+									echo "<td>$".$row[$j]."</td>";
+								else
+									echo "<td>".$row[$j]."</td>";
+							echo "</tr>";
+						}
+						echo "</table>";
+						echo "<br /><br /><input type='submit' name='m_request' value='Request book' />";
+						echo "</form>";
+					}
+				}
+		}
+
+		else {
+        $query = $con->prepare("SELECT * FROM book  where copies>0 ORDER BY title");
         $query->execute();
         $result = $query->get_result();
         
@@ -64,6 +123,7 @@
             echo "<br /><br /><input type='submit' name='m_request' value='Request selected books' />";
             echo "</form>";
         }
+	}
 
 		if(isset($_POST['m_request']))
 		{
@@ -129,6 +189,7 @@
 				}
 			}
 		}
+		
 		?>
 
 </body>

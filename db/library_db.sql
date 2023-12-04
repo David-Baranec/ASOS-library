@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
--- http://www.phpmyadmin.net
+-- version 5.1.0
+-- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Oct 11, 2016 at 03:57 PM
--- Server version: 10.1.13-MariaDB
--- PHP Version: 5.6.21
+-- Hostiteľ: 127.0.0.1
+-- Čas generovania: Út 28.Nov 2023, 13:26
+-- Verzia serveru: 10.4.18-MariaDB
+-- Verzia PHP: 8.0.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -17,12 +18,12 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `library_db`
+-- Databáza: `library_db`
 --
 
 DELIMITER $$
 --
--- Procedures
+-- Procedúry
 --
 CREATE DEFINER=`root`@`localhost` PROCEDURE `generate_due_list` ()  NO SQL
 SELECT I.issue_id, M.email, B.isbn, B.title
@@ -34,7 +35,7 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `book`
+-- Štruktúra tabuľky pre tabuľku `book`
 --
 
 CREATE TABLE `book` (
@@ -47,41 +48,63 @@ CREATE TABLE `book` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `book`
+-- Sťahujem dáta pre tabuľku `book`
 --
 
 INSERT INTO `book` (`isbn`, `title`, `author`, `category`, `price`, `copies`) VALUES
-('0000545010225', 'Harry Potter and the Deathly Hallows', 'J. K. Rowling', 'Fiction', 550, 30),
-('0000553103547', 'A Game of Thrones', 'George R. R. Martin', 'Fiction', 500, 10),
-('0000553106635', 'A Storm of Swords', 'George R. R. Martin', 'Fiction', 550, 15),
-('0000553108034', 'A Clash of Kings', 'George R. R. Martin', 'Fiction', 500, 10),
-('0000553801503', 'A Feast for Crows', 'George R. R. Martin', 'Fiction', 600, 20),
-('0000747532699', 'Harry Potter and the Philosopher''s Stone', 'J. K. Rowling', 'Fiction', 300, 12),
-('0000747538492', 'Harry Potter and the Chamber of Secrets', 'J. K. Rowling', 'Fiction', 300, 10),
-('0000747542155', 'Harry Potter and the Prisoner of Azkaban', 'J. K. Rowling', 'Fiction', 350, 16),
-('0000747546240', 'Harry Potter and the Goblet of Fire', 'J. K. Rowling', 'Fiction', 400, 15),
-('0000747551006', 'Harry Potter and the Order of the Phoenix', 'J. K. Rowling', 'Fiction', 400, 20),
-('0000747581088', 'Harry Potter and the Half-Blood Prince', 'J. K. Rowling', 'Fiction', 500, 25),
-('9780066620992', 'Good to Great', 'Jim Collins', 'Non-fiction', 300, 10),
-('9780241257555', 'The Pigeon Tunnel', 'John le CarrÃ©', 'Non-fiction', 200, 25),
-('9780439023511', 'Mockingjay', 'Suzanne Collins', 'Fiction', 500, 20),
-('9780439023528', 'The Hunger Games', 'Suzanne Collins', 'Fiction', 400, 10),
-('9780545227247', 'Catching Fire', 'Suzanne Collins', 'Fiction', 400, 14),
-('9780553801477', 'A Dance with Dragons', 'George R. R. Martin', 'Fiction', 600, 30),
-('9780967752808', 'Sandbox Wisdom', 'Tom Asacker', 'Non-fiction', 250, 5),
-('9781501141515', 'Born to Run', 'Bruce Springsteen', 'Non-fiction', 250, 20),
-('9788183331630', 'Let Us C', 'Yashavant Kanetkar', 'Education', 200, 22),
-('9789350776667', 'Computer Graphics and Virtual Reality', 'Sanjesh S. Pawale', 'Education', 100, 30),
-('9789350776773', 'Microcontroller and Embedded Systems', 'Harish G. Narula', 'Education', 80, 15),
-('9789350777077', 'Advanced Database Management Systems', 'Mahesh Mali', 'Education', 60, 29),
-('9789350777121', 'Operating Systems', 'Rajesh Kadu', 'Education', 50, 24),
-('9789351194545', 'Open Source Technologies', 'Dayanand Ambawade', 'Education', 100, 20),
-('9789381626719', 'Stay Hungry Stay Foolish', 'Rashmi Bansal', 'Non-fiction', 100, 5);
+('0000545010225', 'Harry Potter and the Deathly Hallows', 'J. K. Rowling', 'Fiction', 55, 30),
+('0000553103547', 'A Game of Thrones', 'George R. R. Martin', 'Fiction', 50, 10),
+('0000553106635', 'A Storm of Swords', 'George R. R. Martin', 'Fiction', 55, 15),
+('0000553108034', 'A Clash of Kings', 'George R. R. Martin', 'Fiction', 50, 0),
+('0000553801503', 'A Feast for Crows', 'George R. R. Martin', 'Fiction', 60, 19),
+('0000747532699', 'Harry Potter and the Philosopher\'s Stone', 'J. K. Rowling', 'Fiction', 30, 12),
+('0000747538492', 'Harry Potter and the Chamber of Secrets', 'J. K. Rowling', 'Fiction', 30, 10),
+('0000747542155', 'Harry Potter and the Prisoner of Azkaban', 'J. K. Rowling', 'Fiction', 35, 16),
+('0000747546240', 'Harry Potter and the Goblet of Fire', 'J. K. Rowling', 'Fiction', 40, 15),
+('0000747551006', 'Harry Potter and the Order of the Phoenix', 'J. K. Rowling', 'Fiction', 40, 20),
+('0000747581088', 'Harry Potter and the Half-Blood Prince', 'J. K. Rowling', 'Fiction', 50, 25),
+('9780066620992', 'Good to Great', 'Jim Collins', 'Non-fiction', 30, 10),
+('9780241257555', 'The Pigeon Tunnel', 'John le CarrÃ©', 'Non-fiction', 20, 25),
+('9780439023511', 'Mockingjay', 'Suzanne Collins', 'Fiction', 50, 20),
+('9780439023528', 'The Hunger Games', 'Suzanne Collins', 'Fiction', 40, 10),
+('9780545227247', 'Catching Fire', 'Suzanne Collins', 'Fiction', 40, 15),
+('9780553801477', 'A Dance with Dragons', 'George R. R. Martin', 'Fiction', 60, 0),
+('9780967752808', 'Sandbox Wisdom', 'Tom Asacker', 'Non-fiction', 25, 5),
+('9781501141515', 'Born to Run', 'Bruce Springsteen', 'Non-fiction', 25, 20),
+('9788183331630', 'Let Us C', 'Yashavant Kanetkar', 'Education', 20, 22),
+('9789350776667', 'Computer Graphics and Virtual Reality', 'Sanjesh S. Pawale', 'Education', 10, 30),
+('9789350776773', 'Microcontroller and Embedded Systems', 'Harish G. Narula', 'Education', 8, 15),
+('9789350777077', 'Advanced Database Management Systems', 'Mahesh Mali', 'Education', 6, 30),
+('9789350777121', 'Operating Systems', 'Rajesh Kadu', 'Education', 5, 24),
+('9789351194545', 'Open Source Technologies', 'Dayanand Ambawade', 'Education', 10, 20),
+('9789381626719', 'Stay Hungry Stay Foolish', 'Rashmi Bansal', 'Non-fiction', 10, 5);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `book_issue_log`
+-- Štruktúra tabuľky pre tabuľku `book_history_log`
+--
+
+CREATE TABLE `book_history_log` (
+  `history_id` int(11) NOT NULL,
+  `member` varchar(20) NOT NULL,
+  `book_isbn` varchar(13) NOT NULL,
+  `borrowing_date` date NOT NULL,
+  `return_date` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Sťahujem dáta pre tabuľku `book_history_log`
+--
+
+INSERT INTO `book_history_log` (`history_id`, `member`, `book_isbn`, `borrowing_date`, `return_date`) VALUES
+(3, 'koo', '9789350776773', '2023-11-28', '2023-11-28'),
+(4, 'koo', '0000553801503', '2023-11-28', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Štruktúra tabuľky pre tabuľku `book_issue_log`
 --
 
 CREATE TABLE `book_issue_log` (
@@ -93,15 +116,14 @@ CREATE TABLE `book_issue_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `book_issue_log`
+-- Sťahujem dáta pre tabuľku `book_issue_log`
 --
 
 INSERT INTO `book_issue_log` (`issue_id`, `member`, `book_isbn`, `due_date`, `last_reminded`) VALUES
-(1, 'seph32', '9789350777077', '2016-10-17', NULL),
-(2, 'seph32', '9780545227247', '2016-10-17', NULL);
+(14, 'koo', '0000553801503', '2023-12-05', NULL);
 
 --
--- Triggers `book_issue_log`
+-- Spúšťače `book_issue_log`
 --
 DELIMITER $$
 CREATE TRIGGER `issue_book` BEFORE INSERT ON `book_issue_log` FOR EACH ROW BEGIN
@@ -123,7 +145,7 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `librarian`
+-- Štruktúra tabuľky pre tabuľku `librarian`
 --
 
 CREATE TABLE `librarian` (
@@ -133,7 +155,7 @@ CREATE TABLE `librarian` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `librarian`
+-- Sťahujem dáta pre tabuľku `librarian`
 --
 
 INSERT INTO `librarian` (`id`, `username`, `password`) VALUES
@@ -142,7 +164,7 @@ INSERT INTO `librarian` (`id`, `username`, `password`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `member`
+-- Štruktúra tabuľky pre tabuľku `member`
 --
 
 CREATE TABLE `member` (
@@ -155,16 +177,16 @@ CREATE TABLE `member` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `member`
+-- Sťahujem dáta pre tabuľku `member`
 --
 
 INSERT INTO `member` (`id`, `username`, `password`, `name`, `email`, `balance`) VALUES
-(1, 'cloud9', 'c67adbca4bd9f7e583f05f4c7edbcb733c7c9233', 'Cloud Strife', 'cloud@shinra.com', 1000),
-(2, 'seph32', '75bf2b008d91258f56fc0d3a938ca64b8a631533', 'Sephiroth', 'seph@shinra.com', 540),
-(3, 'zack_ff7', '52d849001964af394040dc48b673f748e55e1af7', 'Zack Fair', 'zack@shinra.com', 1000);
+(4, 'koo', '956154322bd4b43a2af03dca7a245c1a5eb83b39', 'koo ', 'koo@gmail.com', 9350),
+(5, 'test', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3', 'Test', 'test@test.com', 500),
+(6, 'domi', '48f95adcdd2d1d9b1da95a0e676fea740d73adad', 'dominik', 'gggg@ssss', 50000);
 
 --
--- Triggers `member`
+-- Spúšťače `member`
 --
 DELIMITER $$
 CREATE TRIGGER `add_member` AFTER INSERT ON `member` FOR EACH ROW DELETE FROM pending_registrations WHERE username = NEW.username
@@ -178,29 +200,20 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pending_book_requests`
+-- Štruktúra tabuľky pre tabuľku `pending_book_requests`
 --
 
 CREATE TABLE `pending_book_requests` (
   `request_id` int(11) NOT NULL,
   `member` varchar(20) NOT NULL,
   `book_isbn` varchar(13) NOT NULL,
-  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `time` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `pending_book_requests`
---
-
-INSERT INTO `pending_book_requests` (`request_id`, `member`, `book_isbn`, `time`) VALUES
-(1, 'zack_ff7', '9780553801477', '2016-10-10 12:53:27'),
-(2, 'cloud9', '0000545010225', '2016-10-10 12:53:59'),
-(5, 'seph32', '0000553103547', '2016-10-10 12:59:45');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pending_registrations`
+-- Štruktúra tabuľky pre tabuľku `pending_registrations`
 --
 
 CREATE TABLE `pending_registrations` (
@@ -209,42 +222,40 @@ CREATE TABLE `pending_registrations` (
   `name` varchar(80) NOT NULL,
   `email` varchar(80) NOT NULL,
   `balance` int(4) NOT NULL,
-  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `time` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `pending_registrations`
---
-
-INSERT INTO `pending_registrations` (`username`, `password`, `name`, `email`, `balance`, `time`) VALUES
-('test', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3', 'Test', 'test@test.com', 500, '2016-10-10 13:01:13'),
-('test2', '109f4b3c50d7b0df729d299bc6f8e9ef9066971f', 'Test 2', 'test2@test2.com', 800, '2016-10-10 13:03:41');
-
---
--- Indexes for dumped tables
+-- Kľúče pre exportované tabuľky
 --
 
 --
--- Indexes for table `book`
+-- Indexy pre tabuľku `book`
 --
 ALTER TABLE `book`
   ADD PRIMARY KEY (`isbn`);
 
 --
--- Indexes for table `book_issue_log`
+-- Indexy pre tabuľku `book_history_log`
+--
+ALTER TABLE `book_history_log`
+  ADD PRIMARY KEY (`history_id`);
+
+--
+-- Indexy pre tabuľku `book_issue_log`
 --
 ALTER TABLE `book_issue_log`
   ADD PRIMARY KEY (`issue_id`);
 
 --
--- Indexes for table `librarian`
+-- Indexy pre tabuľku `librarian`
 --
 ALTER TABLE `librarian`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `username` (`username`);
 
 --
--- Indexes for table `member`
+-- Indexy pre tabuľku `member`
 --
 ALTER TABLE `member`
   ADD PRIMARY KEY (`id`),
@@ -252,42 +263,53 @@ ALTER TABLE `member`
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- Indexes for table `pending_book_requests`
+-- Indexy pre tabuľku `pending_book_requests`
 --
 ALTER TABLE `pending_book_requests`
   ADD PRIMARY KEY (`request_id`);
 
 --
--- Indexes for table `pending_registrations`
+-- Indexy pre tabuľku `pending_registrations`
 --
 ALTER TABLE `pending_registrations`
   ADD PRIMARY KEY (`username`),
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT pre exportované tabuľky
 --
 
 --
--- AUTO_INCREMENT for table `book_issue_log`
+-- AUTO_INCREMENT pre tabuľku `book_history_log`
+--
+ALTER TABLE `book_history_log`
+  MODIFY `history_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT pre tabuľku `book_issue_log`
 --
 ALTER TABLE `book_issue_log`
-  MODIFY `issue_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `issue_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
 --
--- AUTO_INCREMENT for table `librarian`
+-- AUTO_INCREMENT pre tabuľku `librarian`
 --
 ALTER TABLE `librarian`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
--- AUTO_INCREMENT for table `member`
+-- AUTO_INCREMENT pre tabuľku `member`
 --
 ALTER TABLE `member`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
 --
--- AUTO_INCREMENT for table `pending_book_requests`
+-- AUTO_INCREMENT pre tabuľku `pending_book_requests`
 --
 ALTER TABLE `pending_book_requests`
-  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
