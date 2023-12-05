@@ -2,6 +2,11 @@
 	require "../db_connect.php";
 	require "../message_display.php";
 	require "verify_librarian.php";
+
+	// Fetch data for ISBN dropdown
+	$isbnQuery = $con->prepare("SELECT isbn FROM book;");
+	$isbnQuery->execute();
+	$isbnResult = $isbnQuery->get_result();
 ?>
 
 <html>
@@ -54,9 +59,17 @@
 					<p id="error"></p>
 				</div>
 				
-				<div class="icon">
-					<input class="b-isbn" type='text' name='b_isbn' id="b_isbn" placeholder="Book ISBN" required />
-				</div>
+				<div>
+					<p class = "cd-select icon">
+				<select class="b-isbn" name="b_isbn" required>
+					<?php
+						while ($row = $isbnResult->fetch_assoc()) {
+							echo "<option>" . $row['isbn'] . "</option>";
+						}
+					?>
+				</select>
+					</p>
+			</div>
 					
 				<div class="icon">
 
@@ -130,6 +143,8 @@
 					die(error_without_field("ERROR: Couldn\'t add copies"));
 				echo success("Copies successfully updated");
 			}
+			header("refresh:1; url=update_copies.php");
+
 		}
 	?>
 </html>

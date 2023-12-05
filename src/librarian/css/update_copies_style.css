@@ -1,6 +1,7 @@
 /*----------Custom Icons----------*/
-.cd-form .icon input {
-  padding-left: 54px !important;
+.cd-form .icon input, 
+.cd-form .icon select {
+  padding-left: 70px !important;
 }
 .cd-form .b-isbn {
   background: url("../img/ic_book_isbn.svg") no-repeat 16px center;

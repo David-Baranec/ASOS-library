@@ -63,7 +63,7 @@
 						echo "<table width='100%' cellpadding=10 cellspacing=10>";
 						echo "<tr>
 								<th></th>
-								<th>ISBN<hr></th>
+								<th>Images<hr></th>
 								<th>Title<hr></th>
 								<th>Author<hr></th>
 								<th>Category<hr></th>
@@ -97,7 +97,8 @@
 											<div class='control__indicator'></div>
 										</label>
 									</td>";
-							for($j=0; $j<6; $j++)
+									echo "<td><img src='books/" . $row[0] . ".jpeg' width='80' height='110' alt='ISBN Image'></td>";
+							for($j=1; $j<6; $j++)
 								if($j == 4)
 									echo "<td>$".$row[$j]."</td>";
 								else
@@ -147,7 +148,7 @@
             echo "<table width='100%' cellpadding=10 cellspacing=10>";
             echo "<tr>
                     <th></th>
-                    <th>ISBN<hr></th>
+                    <th>Images<hr></th>
                     <th>Title<hr></th>
                     <th>Author<hr></th>
                     <th>Category<hr></th>
@@ -181,7 +182,8 @@
                                 <div class='control__indicator'></div>
                             </label>
                         </td>";
-                for($j=0; $j<6; $j++)
+						echo "<td><img src='books/" . $row[0] . ".jpeg' width='80' height='110' alt='ISBN Image'></td>";
+                for($j=1; $j<6; $j++)
                     if($j == 4)
                         echo "<td>$".$row[$j]."</td>";
                     else
