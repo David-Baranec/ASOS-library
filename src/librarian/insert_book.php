@@ -129,10 +129,11 @@
 			
 				// Get the uploaded file name
 				$fileName = basename($_FILES["photo"]["name"]);
-				$targetFilePath = $targetDir . $isbn . "_" . $fileName;
+				echo $fileName;
+				$targetFilePath = $targetDir . $isbn . ".jpeg";
 
 				// Check if file type is allowed (you can customize this based on your needs)
-				$allowedTypes = array('jpeg', 'jpg');
+				$allowedTypes = array('jpeg');
 				$fileType = strtolower(pathinfo($targetFilePath, PATHINFO_EXTENSION));
 			
 				if (in_array($fileType, $allowedTypes)) {
