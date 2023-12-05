@@ -46,7 +46,7 @@
 		<a id="back-btn" href="./home.php">
 			<input type="button" value="Back" />
 		</a>
-		<form class="cd-form" method="POST" action="#">
+		<form class="cd-form" method="POST" action="#" enctype="multipart/form-data" >
 			<legend>Enter book details</legend>
 			
 				<div class="error-message" id="error-message">
@@ -77,6 +77,7 @@
 					</p>
 				</div>
 				
+				
 				<div class="icon">
 					<input class="b-price" type="number" min=1 max=100 name="b_price" placeholder="Price" required />
 				</div>
@@ -84,6 +85,11 @@
 				<div class="icon">
 					<input class="b-copies" type="number" min=1 max=100 name="b_copies" placeholder="Copies" required />
 				</div>
+				</div>
+				<div>
+				<label for="photo">Upload Photo:</label>
+       			<input type="file" name="photo" id="photo" accept="image/*" required>
+					</div>
 				
 				<br />
 				<input class="b-isbn" type="submit" name="b_add" value="Add book" />
@@ -107,6 +113,31 @@
 				if(!$query->execute())
 					die(error_without_field("ERROR: Couldn't add book"));
 				echo success("Successfully added book");
+				$targetDir = "../member/books/";
+				$isbn = $_POST["b_isbn"];
+				// Create the directory if it doesn't exist
+				if (!file_exists($targetDir)) {
+					mkdir($targetDir, 0777, true);
+				}
+			
+				// Get the uploaded file name
+				$fileName = basename($_FILES["photo"]["name"]);
+				$targetFilePath = $targetDir . $isbn . "_" . $fileName;
+
+				// Check if file type is allowed (you can customize this based on your needs)
+				$allowedTypes = array('jpeg', 'jpg');
+				$fileType = strtolower(pathinfo($targetFilePath, PATHINFO_EXTENSION));
+			
+				if (in_array($fileType, $allowedTypes)) {
+					// Upload file to the specified directory
+					if (move_uploaded_file($_FILES["photo"]["tmp_name"], $targetFilePath)) {
+						//echo "The file " . $fileName . " has been uploaded.";
+					} else {
+						echo "Sorry, there was an error uploading your file.";
+					}
+				} else {
+					echo "Sorry, only JPG, JPEG files are allowed.";
+				}
 			}
 		}
 	?>
