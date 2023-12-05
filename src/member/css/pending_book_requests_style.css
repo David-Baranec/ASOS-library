@@ -1,7 +1,7 @@
 /*----------Form styles----------*/
 .cd-form {
   width: 90%;
-  max-width: 1200px;
+  max-width: 600px;
   margin: 4em auto;
   font-size: 1.3rem;
   color: #94aab0;
@@ -20,6 +20,9 @@
   margin-bottom: 20px;
   font-size: 2rem;
   border-bottom: 1px solid #ecf0f1;
+}
+
+.cd-form legend {
   display: block;
   width: 100%;
   -webkit-appearance: none;
@@ -35,9 +38,8 @@
   border-radius: 0.25em;
   padding: 16px 20px;
   color: #ffffff;
-  font-family: "Open Sans", sans-serif;
   font-weight: bold;
-  float: right;
+  font-family: "Open Sans", sans-serif;
   cursor: pointer;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -91,28 +93,29 @@
   padding: 16px;
 }
 
-#searchForm {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 20px;
+.cd-form .error-field {
+  border-color: #e94b35 !important;
 }
 
-label {
-  margin-right: 10px;
-  font-size: 16px;
-  color: #333;
-}
-
-input[type="text"] {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 14px;
-  transition: border-color 0.3s ease-in-out;
-}
-
-input[type="text"]:focus {
-  outline: none;
-  border-color: #007bff;
+#back-btn input[type="button"] {
+  width: 10%;
+  border: none;
+  background: #d75069;
+  border-radius: 0.25em;
+  padding: 16px 20px;
+  color: #ffffff;
+  font-weight: bold;
+  font-family: "Open Sans", sans-serif;
+  font-size: 1.6rem;
+  float: right;
+  cursor: pointer;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  float: left;
+  margin: 10px 0px 0px 10px;
 }

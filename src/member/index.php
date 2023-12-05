@@ -38,30 +38,30 @@
 	</body>
 	
 	<?php
-		if(isset($_POST['m_login']))
+		if(isset($_POST['m_login'])) 
 		{
+			$hashed_password = sha1($_POST['m_pass']);
+
 			$query = $con->prepare("SELECT id, balance FROM member WHERE username = ? AND password = ?;");
-			$query->bind_param("ss", $_POST['m_user'], sha1($_POST['m_pass']));
+			$query->bind_param("ss", $_POST['m_user'], $hashed_password);
 			$query->execute();
 			$result = $query->get_result();
 			
 			if(mysqli_num_rows($result) != 1)
 				echo error_without_field("Invalid username/password combination");
-			else 
-			{
+			else {
 				$resultRow = mysqli_fetch_array($result);
 				$balance = $resultRow[1];
 				if($balance < 0)
 					echo error_without_field("Your account has been suspended. Please contact a librarian for further information");
-				else
-				{
+				else {
 					$_SESSION['type'] = "member";
 					$_SESSION['id'] = $resultRow[0];
 					$_SESSION['username'] = $_POST['m_user'];
 					header('Location: home.php');
 				}
 			}
-		}
+		}		
 	?>
 	
 </html>
