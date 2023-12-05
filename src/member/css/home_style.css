@@ -2,7 +2,7 @@
 .cd-form {
   width: 90%;
   max-width: 1200px;
-  margin: 4em auto;
+  margin: 0em auto;
   font-size: 1.3rem;
   color: #94aab0;
   margin-bottom: 10px;
@@ -115,4 +115,12 @@ input[type="text"] {
 input[type="text"]:focus {
   outline: none;
   border-color: #007bff;
+}
+
+select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: border-color 0.3s ease-in-out;
 }

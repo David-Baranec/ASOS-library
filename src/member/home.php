@@ -128,13 +128,43 @@
         else
         {
 
-			if (isset($_POST['search'])) {
-				$searchTerm = '%' . $_POST['search'] . '%';
-				$query = $con->prepare("SELECT * FROM book WHERE copies > 0 AND (title LIKE ? OR author LIKE ?) ORDER BY title");
-				$query->bind_param("ss", $searchTerm, $searchTerm);
+			echo "<br /><br /><form class='cd-form' method='POST' action='#'>";
+			echo "<label for='search'>Search:</label>";
+			echo "<input type='text' name='search' id='search' placeholder='Enter title or author'>";
+			echo "<input type='submit' value='Search'>";
+			echo "</form>";
+
+			echo "<br /><br /><form class='cd-form' method='POST' action='#'>";
+			echo "<label for='category'>Filter by Category:</label>";
+			echo "<select name='category' id='category'>";
+			echo "<option value=''>All Categories</option>";
+
+			// Fetch distinct categories from the 'book' table
+			$categoryQuery = $con->prepare("SELECT DISTINCT category FROM book");
+			$categoryQuery->execute();
+			$categoryResult = $categoryQuery->get_result();
+
+			while ($categoryRow = mysqli_fetch_assoc($categoryResult)) {
+				$selected = (isset($_POST['category']) && $_POST['category'] == $categoryRow['category']) ? 'selected' : '';
+				echo "<option value='" . $categoryRow['category'] . "' $selected>" . $categoryRow['category'] . "</option>";
+			}
+
+			echo "</select>";
+			echo "<input type='submit' value='Filter'>";
+			echo "</form>";
+
+
+			if ((isset($_POST['search']) && $_POST['search'] !== '') || (isset($_POST['category']) && $_POST['category'] !== '')) {
+				// Adjust the query based on the selected category and search term
+				$searchTerm = '%' . (isset($_POST['search']) ? $_POST['search'] : '') . '%';
+				$categoryFilter = isset($_POST['category']) ? $_POST['category'] : '';
+				$query = $con->prepare("SELECT * FROM book WHERE copies > 0 
+										AND (title LIKE ? OR author LIKE ?) 
+										AND (? = '' OR category = ?) ORDER BY title");
+				$query->bind_param("ssss", $searchTerm, $searchTerm, $categoryFilter, $categoryFilter);
 			} else {
 				$query = $con->prepare("SELECT * FROM book WHERE copies > 0 ORDER BY title");
-			}
+			}				
 			
 			$query->execute();
 			$result = $query->get_result();
