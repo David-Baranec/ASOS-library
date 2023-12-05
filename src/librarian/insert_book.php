@@ -73,6 +73,13 @@
 							<option>Fiction</option>
 							<option>Non-fiction</option>
 							<option>Education</option>
+							<option>Fairy Tale</option>
+							<option>Fantasy</option>
+							<option>Horror</option>
+							<option>Romance</option>
+							<option>Biography</option>
+							<option>Mystery</option>
+							<option>Cook Books</option>
 						</select>
 					</p>
 				</div>
